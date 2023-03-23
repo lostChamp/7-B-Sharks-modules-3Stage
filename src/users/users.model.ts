@@ -15,5 +15,4 @@ export class User extends Model<User, UserCreationAttribute> {
 
     @Column({type: DataType.STRING, allowNull: true})
     password: string;
-
 }
