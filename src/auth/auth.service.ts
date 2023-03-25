@@ -3,6 +3,7 @@ import {CreateUserDto} from "../users/dto/create-user.dto";
 import {UsersService} from "../users/users.service";
 import {JwtService} from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
+import {CreateProfileDto} from "../profile/dto/create-profile.dto";
 
 @Injectable()
 export class AuthService {
@@ -15,18 +16,18 @@ export class AuthService {
     }
 
 
-    async registration(userDto: CreateUserDto) {
+    async registration(userDto: CreateUserDto, profileDto: CreateProfileDto) {
         const candidate = await this.userService.getUserByEmail(userDto.mail);
         if(candidate) {
-            throw new HttpException("Пользователь с таким mail не найден", HttpStatus.BAD_REQUEST);
+            throw new HttpException("Пользователь с таким mail существует", HttpStatus.BAD_REQUEST);
         }
         const hashPassword = await bcrypt.hash(userDto.password, 5);
-        const user = await this.userService.createUser({...userDto, password: hashPassword});
+        const user = await this.userService.createUser({...userDto, password: hashPassword}, {...profileDto});
         return this.generateToken(user);
     }
 
     private async generateToken(user) {
-        const payload = {mail: user.mail, id: user.id, roles: user.roles}
+        const payload = {mail: user.mail, id: user.id, roles: user.roles, profile: user.profile}
         return {
             token: this.jwtService.sign(payload)
         }

@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {forwardRef, Inject, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {Profile} from "./profile.model";
 import {CreateProfileDto} from "./dto/create-profile.dto";
@@ -9,6 +9,7 @@ import {CreateUserDto} from "../users/dto/create-user.dto";
 export class ProfileService {
 
     constructor(@InjectModel(Profile) private profileRepository: typeof Profile,
+                @Inject(forwardRef(() => UsersService))
                 private userService: UsersService) {}
 
     async createProfile(dto: CreateProfileDto, userDto: CreateUserDto) {
@@ -21,6 +22,12 @@ export class ProfileService {
     async getAllProfile() {
         const profiles = await this.profileRepository.findAll({include: {all: true}});
         return profiles;
+    }
+
+    async getProfileByUserId(userId: number) {
+        const user_id = String(userId)
+        const profile = await this.profileRepository.findOne({where: {user_id}});
+        return profile;
     }
 
 }

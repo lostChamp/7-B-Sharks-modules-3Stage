@@ -12,8 +12,7 @@ export class UsersController {
 
   @Post()
   createUser(@Body() userDto: CreateUserDto, @Body() profileDto: CreateProfileDto) {
-    const user = this.userService.createUser(userDto);
-    this.profileService.createProfile(profileDto, userDto);
+    const user = this.userService.createUser(userDto, profileDto);
     return user;
   }
 
