@@ -24,9 +24,9 @@ export class ProfileService {
         return profiles;
     }
 
-    async getProfileByUserId(userId: number) {
-        const user_id = String(userId)
-        const profile = await this.profileRepository.findOne({where: {user_id}});
+    async editProfileByUserMail(userDto: CreateUserDto, profileDto: CreateProfileDto) {
+        const user = await this.userService.getUserByEmail(userDto.mail);
+        const profile = await this.profileRepository.update({full_name: profileDto.full_name, phone_number: profileDto.phone_number}, {where: {user_id: user.id}});
         return profile;
     }
 

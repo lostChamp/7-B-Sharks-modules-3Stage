@@ -5,6 +5,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import {RolesService} from "../roles/roles.service";
 import {ProfileService} from "../profile/profile.service";
 import {CreateProfileDto} from "../profile/dto/create-profile.dto";
+import {where} from "sequelize";
 
 @Injectable()
 export class UsersService {
@@ -31,6 +32,12 @@ export class UsersService {
 
     async getUserByEmail(mail: string) {
         const user = await this.userRepository.findOne({where: {mail}, include: {all: true}});
+        return user;
+    }
+
+    async deleteUserById(userId: number) {
+        const id = String(userId);
+        const user = await this.userRepository.destroy({where: {id}});
         return user;
     }
 
