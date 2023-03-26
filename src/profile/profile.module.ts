@@ -8,6 +8,7 @@ import {UsersModule} from "../users/users.module";
 import {RolesService} from "../roles/roles.service";
 import {RolesModule} from "../roles/roles.module";
 import {Role} from "../roles/roles.model";
+import {JwtService} from "@nestjs/jwt";
 
 @Module({
   providers: [ProfileService, UsersService, RolesService],
