@@ -12,6 +12,7 @@ import {UserRoles} from "./roles/user-roles.model";
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import {Profile} from "./profile/profile.model";
+import { TblockModule } from './tblock/tblock.module';
 
 
 @Module({
@@ -33,6 +34,7 @@ import {Profile} from "./profile/profile.model";
     RolesModule,
     AuthModule,
     ProfileModule,
+    TblockModule,
   ],
   controllers: [],
   providers: [],

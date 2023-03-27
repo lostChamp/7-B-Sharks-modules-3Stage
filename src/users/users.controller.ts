@@ -3,7 +3,6 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
 import {CreateProfileDto} from "../profile/dto/create-profile.dto";
 import {ProfileService} from "../profile/profile.service";
-import {JwtAuthGuard} from "../auth/jwt-auth-guard";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 import {AuthService} from "../auth/auth.service";
