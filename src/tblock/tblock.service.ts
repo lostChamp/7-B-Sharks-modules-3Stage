@@ -2,15 +2,19 @@ import { Injectable } from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {Tblock} from "./tblock.model";
 import {CreateTblockDto} from "./dto/create-tblock.dto";
+import {SaveImagesService} from "../save-images/save-images.service";
+import {CreateSaveImagesDto} from "../save-images/dto/create-save-images.dto";
 
 @Injectable()
 export class TblockService {
 
-    constructor(@InjectModel(Tblock) private tblockRepository: typeof Tblock) {}
+    constructor(@InjectModel(Tblock) private tblockRepository: typeof Tblock,
+                private imageService: SaveImagesService) {}
 
-    async createTblock(tblockDto: CreateTblockDto) {
+    async createTblock(tblockDto: CreateTblockDto, imageDto: CreateSaveImagesDto, image_file: any) {
         const tblock = await this.tblockRepository.create(tblockDto);
-        return tblock;
+        const image = await this.imageService.createImage(imageDto, image_file);
+        return [tblock, image];
     }
 
     async getAllTblocks() {

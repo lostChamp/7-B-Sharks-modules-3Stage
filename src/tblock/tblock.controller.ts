@@ -1,10 +1,23 @@
-import {Body, Controller, Delete, Get, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UploadedFile,
+    UseGuards,
+    UseInterceptors
+} from '@nestjs/common';
 import {TblockService} from "./tblock.service";
 import {CreateTblockDto} from "./dto/create-tblock.dto";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 import {JwtService} from "@nestjs/jwt";
 import {AuthService} from "../auth/auth.service";
+import {CreateSaveImagesDto} from "../save-images/dto/create-save-images.dto";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @Controller('tblock')
 export class TblockController {
@@ -16,8 +29,9 @@ export class TblockController {
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Post()
-    createTblock(@Body() tblockDto: CreateTblockDto) {
-        const user = this.tblockService.createTblock(tblockDto);
+    @UseInterceptors(FileInterceptor("image"))
+    createTblock(@Body() tblockDto: CreateTblockDto, @Body() imageDto: CreateSaveImagesDto, @UploadedFile() image) {
+        const user = this.tblockService.createTblock(tblockDto, imageDto, image);
         return user;
     }
     @Roles("ADMIN")

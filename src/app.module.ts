@@ -5,18 +5,23 @@ import { ConfigModule } from '@nestjs/config';
 import * as process from 'process';
 import { User } from './users/users.model';
 import { RolesModule } from './roles/roles.module';
-import {RolesController} from "./roles/roles.controller";
-import {RolesService} from "./roles/roles.service";
 import {Role} from "./roles/roles.model";
 import {UserRoles} from "./roles/user-roles.model";
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import {Profile} from "./profile/profile.model";
 import { TblockModule } from './tblock/tblock.module';
+import { SaveImagesModule } from './save-images/save-images.module';
+import { FilesModule } from './files/files.module';
+import {ServeStaticModule} from "@nestjs/serve-static";
+import * as path from "path";
 
 
 @Module({
   imports: [
+      ServeStaticModule.forRoot({
+        rootPath: path.resolve(__dirname, "static")
+      }),
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
@@ -35,6 +40,8 @@ import { TblockModule } from './tblock/tblock.module';
     AuthModule,
     ProfileModule,
     TblockModule,
+    SaveImagesModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],
