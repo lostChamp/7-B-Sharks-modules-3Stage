@@ -23,6 +23,11 @@ export class TblockService {
         return tblocks;
     }
 
+    async getTblockByUniqueName(unique_name: string) {
+        const tblock = await this.tblockRepository.findOne({where: {unique_name}, include: {all: true}});
+        return tblock;
+    }
+
     async deleteTblockById(tblock_id: string) {
         const tblock = await this.tblockRepository.destroy({where: {id: tblock_id}});
         return tblock;

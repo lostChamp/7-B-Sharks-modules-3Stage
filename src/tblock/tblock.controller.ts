@@ -30,10 +30,18 @@ export class TblockController {
 
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
-    @Get("/:group")
+    @Get("/bygroup/:group")
     getTblocksByGroup(@Param("group") group_name: string) {
         const tblocks = this.tblockService.getTblocksByGroup(group_name);
         return tblocks;
+    }
+
+    @Roles("ADMIN")
+    @UseGuards(RolesGuard)
+    @Get("/byunique/:unique")
+    getTblockByUniqueName(@Param("unique") unique: string) {
+        const tblock = this.tblockService.getTblockByUniqueName(unique);
+        return tblock;
     }
 
     @Roles("ADMIN")
