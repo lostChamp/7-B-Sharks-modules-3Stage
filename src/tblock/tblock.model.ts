@@ -1,7 +1,8 @@
-import {BelongsToMany, Column, DataType, HasOne, Model, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, HasMany, HasOne, Model, Table} from "sequelize-typescript";
 import {Role} from "../roles/roles.model";
 import {UserRoles} from "../roles/user-roles.model";
 import {Profile} from "../profile/profile.model";
+import {Images} from "../save-images/save-images.model";
 
 interface TblockCreationAttribute {
     readonly unique_name: string,
@@ -31,4 +32,7 @@ export class Tblock extends Model<Tblock, TblockCreationAttribute> {
 
     @Column({type: DataType.STRING, allowNull: true})
     group: string;
+
+    @HasMany(() => Images)
+    images: Images;
 }

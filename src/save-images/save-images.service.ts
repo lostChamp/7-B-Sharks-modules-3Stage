@@ -17,6 +17,11 @@ export class SaveImagesService {
         return image;
     }
 
+    async deleteImagesByTblockId(tblockId) {
+        const images = await this.imagesRepository.destroy({where: {tblock_id: tblockId}});
+        return images;
+    }
+
     async deleteImages() {
         const images1 = await this.imagesRepository.destroy({where: {essence_table: "", essence_id: ""}});
         const images2 = await this.imagesRepository.destroy({where: {essence_table: null, essence_id: null}});

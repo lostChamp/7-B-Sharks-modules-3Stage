@@ -1,4 +1,5 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {Tblock} from "../tblock/tblock.model";
 
 interface SaveImagesCreationAttribute {
     essence_table: string;
@@ -20,4 +21,11 @@ export class Images extends Model<Images, SaveImagesCreationAttribute> {
 
     @Column({type: DataType.STRING})
     image_name: string;
+
+    @ForeignKey(() => Tblock)
+    @Column({type: DataType.INTEGER})
+    tblock_id: number;
+
+    @BelongsTo(() => Tblock)
+    tblock: Tblock
 }

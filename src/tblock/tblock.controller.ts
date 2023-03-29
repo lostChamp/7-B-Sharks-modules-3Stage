@@ -18,13 +18,15 @@ import {JwtService} from "@nestjs/jwt";
 import {AuthService} from "../auth/auth.service";
 import {CreateSaveImagesDto} from "../save-images/dto/create-save-images.dto";
 import {FileInterceptor} from "@nestjs/platform-express";
+import {SaveImagesService} from "../save-images/save-images.service";
 
 @Controller('tblock')
 export class TblockController {
 
     constructor(private tblockService: TblockService,
                 private jwtService: JwtService,
-                private authService: AuthService) {}
+                private authService: AuthService,
+                private saveImagesService: SaveImagesService) {}
 
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
@@ -70,8 +72,9 @@ export class TblockController {
     @UseGuards(RolesGuard)
     @Delete("/:id")
     deleteTblockById(@Param("id") tblock_id: string) {
+        const images = this.saveImagesService.deleteImagesByTblockId(tblock_id);
         const tblock = this.tblockService.deleteTblockById(tblock_id);
-        return tblock;
+        return [tblock, images];
     }
 
 }
