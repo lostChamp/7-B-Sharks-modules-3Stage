@@ -4,6 +4,7 @@ import {Images} from "./save-images.model";
 import {CreateSaveImagesDto} from "./dto/create-save-images.dto";
 import {FilesService} from "../files/files.service";
 import {Op} from "sequelize";
+import {EditTblockDto} from "../tblock/dto/edit-block.dto";
 
 @Injectable()
 export class SaveImagesService {
@@ -31,4 +32,11 @@ export class SaveImagesService {
         return [images1, images2, images3];
     }
 
+    async editImageByTblockId(tblockId, editTblockDto: EditTblockDto) {
+        const image = await this.imagesRepository.update(
+            {essence_id: editTblockDto.essence_id, essence_table: editTblockDto.essence_table},
+            {where: {tblock_id: tblockId}}
+        )
+        return image;
+    }
 }

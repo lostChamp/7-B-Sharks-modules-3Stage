@@ -19,6 +19,8 @@ import {AuthService} from "../auth/auth.service";
 import {CreateSaveImagesDto} from "../save-images/dto/create-save-images.dto";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {SaveImagesService} from "../save-images/save-images.service";
+import {EditTblockDto} from "./dto/edit-block.dto";
+
 
 @Controller('tblock')
 export class TblockController {
@@ -63,9 +65,10 @@ export class TblockController {
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Put("/:id")
-    editTblockById(@Param("id") tblock_id: string, @Body() tblockDto: CreateTblockDto) {
-        const tblock = this.tblockService.editTblockById(tblock_id, tblockDto);
-        return tblock;
+    editTblockById(@Param("id") tblock_id: string, @Body() editTblockDto: EditTblockDto) {
+        const tblock = this.tblockService.editTblockById(tblock_id, editTblockDto);
+        const image = this.saveImagesService.editImageByTblockId(tblock_id, editTblockDto)
+        return [tblock, image];
     }
 
     @Roles("ADMIN")
