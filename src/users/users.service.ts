@@ -5,7 +5,6 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import {RolesService} from "../roles/roles.service";
 import {ProfileService} from "../profile/profile.service";
 import {CreateProfileDto} from "../profile/dto/create-profile.dto";
-import {where} from "sequelize";
 
 @Injectable()
 export class UsersService {

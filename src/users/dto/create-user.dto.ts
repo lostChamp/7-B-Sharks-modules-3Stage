@@ -1,5 +1,4 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {Role} from "../../roles/roles.model";
 
 export class CreateUserDto {
     @ApiProperty({example: "user@mail.ru", description: "Mail пользователя"})

@@ -24,11 +24,13 @@ export class SaveImagesService {
     }
 
     async deleteImages() {
+        const getDateForDestroy = (date, hour) => {
+            date.setHours(date.getHours() - hour);
+            return date;
+        }
         const images1 = await this.imagesRepository.destroy({where: {essence_table: "", essence_id: ""}});
         const images2 = await this.imagesRepository.destroy({where: {essence_table: null, essence_id: null}});
-        const images3 = await this.imagesRepository.destroy({where: {createdAt:
-                    {[Op.lt]: new Date()} //доделать
-            }});
+        const images3 = await this.imagesRepository.destroy({where: {createdAt: {[Op.lte]: getDateForDestroy(new Date(), 1)}}});
         return [images1, images2, images3];
     }
 

@@ -1,4 +1,4 @@
-import {BelongsToMany, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {Role} from "./roles.model";
 import {User} from "../users/users.model";
 import { ApiProperty } from "@nestjs/swagger";

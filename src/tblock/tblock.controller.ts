@@ -21,7 +21,6 @@ import {FileInterceptor} from "@nestjs/platform-express";
 import {SaveImagesService} from "../save-images/save-images.service";
 import {EditTblockDto} from "./dto/edit-block.dto";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {User} from "../users/users.model";
 import {Tblock} from "./tblock.model";
 
 @ApiTags("TBLOCK")

@@ -1,4 +1,4 @@
-import {Controller, Delete, Param, UseGuards} from '@nestjs/common';
+import {Controller, Delete, UseGuards} from '@nestjs/common';
 import {SaveImagesService} from "./save-images.service";
 import {JwtService} from "@nestjs/jwt";
 import {AuthService} from "../auth/auth.service";
