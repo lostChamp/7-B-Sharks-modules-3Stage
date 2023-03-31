@@ -4,7 +4,9 @@ import {JwtService} from "@nestjs/jwt";
 import {AuthService} from "../auth/auth.service";
 import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("SAVE-IMAGES")
 @Controller('save-images')
 export class SaveImagesController {
 
@@ -12,6 +14,8 @@ export class SaveImagesController {
                 private jwtService: JwtService,
                 private authService: AuthService) {}
 
+    @ApiOperation({summary: "Удаление неиспользуемых или старых файлов"})
+    @ApiResponse({status: 200})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Delete()

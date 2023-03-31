@@ -7,8 +7,10 @@ import {Roles} from "../auth/roles-auth.decorator";
 import {RolesGuard} from "../auth/roles.guard";
 import {AuthService} from "../auth/auth.service";
 import {JwtService} from "@nestjs/jwt";
+import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {User} from "./users.model";
 
-
+@ApiTags("USERS")
 @Controller('users')
 export class UsersController {
 
@@ -17,23 +19,32 @@ export class UsersController {
               private authService: AuthService,
               private jwtService: JwtService) {}
 
+  @ApiOperation({summary: "Создание пользователя и профиля"})
+  @ApiResponse({status: 200, type: User})
   @Post()
   createUser(@Body() userDto: CreateUserDto, @Body() profileDto: CreateProfileDto) {
     const user = this.userService.createUser(userDto, profileDto);
     return user;
   }
+  @ApiOperation({summary: "Получение пользователей со всей информацией о них (АДМИН)"})
+  @ApiResponse({status: 200, type: [User]})
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
   @Get()
   getAll() {
     return this.userService.getAllUsers();
   }
+
+  @ApiOperation({summary: "Удаление пользователя по id (АДМИН)"})
+  @ApiResponse({status: 200})
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
   @Delete("/delete/:id")
   deleteUserById(@Param("id") user_id: number) {
     return this.userService.deleteUserById(user_id);
   }
+  @ApiOperation({summary: "Редактирование пользователя по id (АДМИН)"})
+  @ApiResponse({status: 200})
   @Roles("ADMIN")
   @UseGuards(RolesGuard)
   @Put("/edit/:id")
@@ -41,6 +52,8 @@ export class UsersController {
     return this.profileService.editProfileByUserId(user_id, profileDto);
   }
 
+  @ApiOperation({summary: "Редактирование профиля пользователем"})
+  @ApiResponse({status: 200})
   @Roles("USER")
   @UseGuards(RolesGuard)
   @Put("/edit")
@@ -50,6 +63,8 @@ export class UsersController {
     return this.profileService.editProfileByUserId(user.id, profileDto);
   }
 
+  @ApiOperation({summary: "Удаление аккаунта"})
+  @ApiResponse({status: 200})
   @Roles("USER")
   @UseGuards(RolesGuard)
   @Delete("/delete")

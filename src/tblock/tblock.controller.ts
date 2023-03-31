@@ -20,8 +20,11 @@ import {CreateSaveImagesDto} from "../save-images/dto/create-save-images.dto";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {SaveImagesService} from "../save-images/save-images.service";
 import {EditTblockDto} from "./dto/edit-block.dto";
+import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {User} from "../users/users.model";
+import {Tblock} from "./tblock.model";
 
-
+@ApiTags("TBLOCK")
 @Controller('tblock')
 export class TblockController {
 
@@ -30,6 +33,8 @@ export class TblockController {
                 private authService: AuthService,
                 private saveImagesService: SaveImagesService) {}
 
+    @ApiOperation({summary: "Создание Tblock'a (АДМИН)"})
+    @ApiResponse({status: 200, type: Tblock})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Post()
@@ -38,6 +43,8 @@ export class TblockController {
         const user = this.tblockService.createTblock(tblockDto, imageDto, image);
         return user;
     }
+    @ApiOperation({summary: "Получение всех Tblock'ов (АДМИН)"})
+    @ApiResponse({status: 200, type: Tblock})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Get()
@@ -46,6 +53,8 @@ export class TblockController {
         return tblocks;
     }
 
+    @ApiOperation({summary: "Получение Tblock'ов по группе (АДМИН)"})
+    @ApiResponse({status: 200, type: Tblock})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Get("/bygroup/:group")
@@ -54,6 +63,8 @@ export class TblockController {
         return tblocks;
     }
 
+    @ApiOperation({summary: "Получение Tblock'ов по уникальному имени (АДМИН)"})
+    @ApiResponse({status: 200, type: Tblock})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Get("/byunique/:unique")
@@ -62,6 +73,8 @@ export class TblockController {
         return tblock;
     }
 
+    @ApiOperation({summary: "Редактирование Tblock'ов по id (АДМИН)"})
+    @ApiResponse({status: 200})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Put("/:id")
@@ -71,6 +84,8 @@ export class TblockController {
         return [tblock, image];
     }
 
+    @ApiOperation({summary: "Удаление Tblock'ов по id (АДМИН)"})
+    @ApiResponse({status: 200})
     @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Delete("/:id")

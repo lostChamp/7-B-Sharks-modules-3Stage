@@ -23,7 +23,7 @@ export class TblockService {
     }
 
     async getTblocksByGroup(group_name: string) {
-        const tblocks = await this.tblockRepository.findAll({where: {group: group_name}});
+        const tblocks = await this.tblockRepository.findAll({where: {group: group_name}, include: {all: true}});
         return tblocks;
     }
 
